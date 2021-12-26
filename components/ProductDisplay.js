@@ -28,6 +28,8 @@ app.component('product-display', {
                     </div>
                     <button class="button" @click="addToChart" :class="{disabledButton: !inStock}"
                         :disabled="!inStock">Add to Cart</button>
+                    <button class="button" @click="removeToChart" :class="{disabledButton: !inStock}"
+                        :disabled="!inStock">Remove to Cart</button>
                 </div>
             </div>
         </div>`,
@@ -45,12 +47,14 @@ app.component('product-display', {
     },
     methods: {
         addToChart() {
-            this.cart += 1
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
+        },
+        removeToChart() {
+            this.$emit('remove-to-cart', this.variants[this.selectedVariant].id)  
         },
         updateVariant(index) {
             this.selectedVariant = index;
-            console.log(index);
-        }
+        },
     },
     computed: {
         title() {
@@ -70,12 +74,3 @@ app.component('product-display', {
         }
     }
 });
-
-app.component('product-details', {
-    template: 
-    /*html*/
-    `<div>
-            <p>Details:</p>
-            <p>This product is best seller on Asia-Pacific</p>
-        </div>`
-})
